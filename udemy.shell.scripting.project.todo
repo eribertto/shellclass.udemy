@@ -8,9 +8,9 @@ https://www.udemy.com/course/linux-shell-scripting-projects/
 
 ✔ Begin Section 3 User and account creation Shell Scripting Project 1. @done(23-01-20 14:00)
 	✔ Section 11 section introduction @done(23-01-20 15:29)
-	☐ Section 12 getting started with shell scripting
-	☐ Section 13 special variables, pseudocode, command substituion, if conditionals
-	☐ Section 14 exit statuses, return codes, string test conditionals
+	✔ Section 12 getting started with shell scripting @done(23-01-22 21:35)
+	✔ Section 13 special variables, pseudocode, command substituion, if conditionals @done(23-01-22 21:35)
+	✔ Section 14 exit statuses, return codes, string test conditionals @done(23-01-22 21:35)
 	☐ Section 15 reading standard input, creating accounts, username conventions
 	☐ Section 16 exercise 2 instructions
 	☐ Section 17 exercise 2 walkthrough

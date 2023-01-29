@@ -1,0 +1,286 @@
+Welcome to the Exercise Walkthrough.
+This is where you'll get a chance to look over my shoulder, if you will, and see how I approach this
+particular exercise.
+The first thing I want to do, however, is just set the stage, give you a little bit of background
+information about a situation where you might use this in the real world.
+Let's say that you're a Linux system administrator for a growing, fast paced company.
+You have a lot of projects and deadlines that you're working on and working toward, but you keep getting
+interrupted by the helpdesk to create new user accounts.
+You decide that your only hope for getting a couple of hours uninterrupted that will give you some time
+to work on these projects and meet your deadlines is to actually automate and offload this account creation
+process to some other group.
+So you decide to go ahead and create a shell script, test it on your local system, and then upload
+that shell script to where it can be used by staff of the helpdesk, for example.
+And that way they don't have to call you an email and interrupt you and you can focus on more high level
+work.
+So once you've decided that you're going to write this script, you sit down and think about what should
+be in the script, what it's got to do, how it should work, if there are any checks you need to perform,
+and so on.
+And so you just scribble down a little list and here's what you've come up with.
+You decided to name the script, add local user.
+You also decide that you want to make sure that whoever is executing the script does so with root or
+superuser privileges so that the account creation process can work.
+And if they don't do that, if they don't run it as root or run it with Sudo, for example, then you
+want to make sure to quit the script and exit out.
+And you also want to follow those standard command conventions and shell script conventions by exiting
+with a non-zero exit status.
+If the script doesn't fully complete properly so, then you think about the next scenario where they
+actually do execute the script with the proper privileges.
+What information do you need from the person that is running the script in order to create an account?
+And of course you need at least a username.
+You'll also want the full name of the person that will be using the account or who the Help Desk is
+creating the account for.
+And then you'll probably want to request an initial password so you can set that on the account.
+So the next thing that the script will do, obviously, is to take all that information and to create
+a local Linux account.
+From your experience as a Linux system administrator, you know that from time to time the command that
+will add a user to a system will fail for various reasons.
+One reason might be that the person executing the command would supply a username that is already in
+use and then the user add command will fail.
+So you want to account for those situations and you don't want to tell whoever's running the script
+that a user was created when in fact the user was not created.
+So you want to make sure that the user ad command in your script executes properly.
+And if for some reason it doesn't, you want to stop the execution of your script and just tell the
+person running the script that the account was not able to be created.
+Now, at that time, they will probably escalate it to you or your team and you'll have to go in and
+figure out why it didn't execute properly.
+And you don't expect the helpdesk staff to do that, but you want to make sure to not tell them that
+a user was created when in fact it wasn't.
+If, on the other hand, the user was creating successfully, you want to display the username, the
+password and the host where the account was created.
+On this way, the person that's creating the account or running the script can take that information
+and deliver it to the end user who will actually use the account that was created.
+So the user will know what their username is, what their password is, and on what system that that
+account exists on.
+By the way, in the lessons leading up to this exercise, we didn't explicitly cover how to determine
+the host name of the machine that you're on.
+I've left that up to you so you can get used to referring to the Bash Man page and looking for the information
+that you need, getting help and so on.
+You'll use the exact same concepts that we've used explicitly in the previous lessons, for example,
+how to look up a user ID and so forth.
+But I didn't give you the exact answer because again, I wanted you to get that practice so you can
+do it on your own.
+And this way, if you ever encounter something that you're not 100% sure about, you have the practice
+of going about how to find that information.
+So at this point, you know that you're going to create a script, you know what the script is going
+to do, how it's going to work.
+And so now what you want to do is test it on your local machine before you turn it over and let other
+people use it.
+So the first thing you want to do is start a command prompt or terminal on your local machine.
+Then we're going to move into the class folder.
+From here, we're going to initialize a vagrant project called Local Users.
+If you've been following along in the earlier lessons, you'll already have this folder so you don't
+have to do the make dir command.
+But if that directory doesn't exist, go ahead and create it.
+Now move into that folder and initialize your vagrant project.
+We want to give some indication of what machine we're logged into.
+So let's go ahead and set a hostname for this machine and we can do that by editing the vagrant file.
+Do that with a config vm hostname.
+Equals.
+And I'm going to set this to local users and then.
+Right.
+And quit.
+Save my changes here.
+Now we're ready to bring up the VM and connect to it.
+So we'll run Vagrant up to start the VM.
+Okay.
+Now that the virtual machine is up, let's connect to it with vagrant sage.
+So now let's move into the shared vagrant folder, which is mounted inside the virtual machine at Vagrant.
+So here you have a choice either to develop and write your script inside the virtual machine, or to
+develop and write your script on your local machine, but save it into the shared folder.
+Again, I'm a big fan of Vim, so I'm just going to create the script right inside the virtual machine.
+We already know that you decided to name it add dash local dash user.
+So we'll go ahead and use that file name.
+I'm sure you know by now that every single script we're going to write starts with a shebang.
+And then now we're going to put a header at this file to give anyone who looks at it an idea of what
+it does.
+So this group creates a user on the local system and we're going to tell them what we're going to ask
+them for.
+We're going to ask them for the username.
+It's also called the login, the person's name that will be used in the account and a password for that
+account.
+And finally, the main thing that this script does is display that information.
+If you think back to the Shell script requirements that we came up with, we wanted to make sure that
+the script was being executed with superuser privileges.
+So let's check for that.
+First off, there's no need to prompt them for a username or password if we're not going to be able
+to use it anyway.
+So let's just do that right at the top of the script.
+We'll use an F statement.
+We're going to check the UID that is set by bash.
+It's a shell variable that gets set any time bash is started and this variable UID is read only, so
+it can't be changed so we can trust it.
+Another thing we know is that the root account always has a UID of zero, so we can test against the
+UID of zero.
+So if the UID is not equal to zero, which means they're not executing with superuser privileges, then
+what we want to do is give them a message.
+So we'll use this chance to teach them how to use the script.
+And then we want to follow convention and exit with a non zero exit status.
+Since we're not doing anything specific with these exit statuses, we'll just use one finish up our
+if statement here and that is our check for superuser privileges.
+Now if they have executed the script with the proper privileges, now we need to start collecting some
+information and we know how to do that by using the read shell built in.
+So let's build that right now.
+We'll give them a prompt which dash p stands for prompt and we'll follow that with enter the username
+to create, we're going to use a space so that when they start typing, it's not mushed up against their
+colon.
+They're we're going to assign what they type into a variable and we're going to call this variable user
+underscore name.
+Now, by the way, when you're writing this script, you could have chosen any other name for your variable.
+You might have said, log in here, you might have said account name, you might have named it dog or
+cat, which doesn't make any sense, but it's a valid syntax.
+So in theory, that's okay.
+So before I go any further, I do want to point out here that this is one way to implement the Shell
+script, and there are multiple ways.
+And that's one of the things that I love about Linux and Shell scripting specifically is that there
+are multiple ways to do things and it allows for some creativity and individuality while still being
+able to do useful work and allowing other people to read your code.
+So just know if you used a different prompt or different variable name that is totally acceptable.
+The main thing is does your shell script deliver on their requirements?
+For example, this script does it exit when it's not executed with superuser privileges?
+If it does, then you did it right.
+And if it doesn't, then you need to adjust your code.
+Okay, enough of the aside.
+Let's keep going on here.
+So now we have the username.
+The next bit of information that we want to collect from the person running the script is their real
+name.
+And actually this is just going to be the contents for the description filled or comment filled in the
+password file.
+So this may or may not actually be a real name.
+For example, if someone is creating an account for an application, this might be the application name.
+So we're going to go ahead and account for that in our script because we're thinking of it now.
+Now, if you just said real name or person name, that's totally fine as well.
+We're going to call this comment.
+And now the last bit of information we need to get is the password.
+Again, we'll use the read built in with a dash P to prompt the user.
+And we're going to assign this to the password variable.
+Now that we have all the information we need, we can go ahead and create the account.
+Okay.
+We'll use the user add command and the user add command requires root privileges.
+That's why we did the check at the beginning of the script.
+So what we want to do here is use the dash key option and supply the comment or the name or whatever
+that was given to us and that is stored in the comment variable.
+And we enclose that in quotes so that even if there will be spaces in this comment, it's all treated
+as the comment.
+So Jane Space Smith will all go into the comment field and it will not be interpreted as two different
+things, Jane being one thing and Smith being another.
+Now we want to ensure the home directory gets created so we can use the dash flag.
+And then finally we need to specify the account name, the login name or the username, as I like to
+call it at the end of the user add command here.
+So we talked about this earlier.
+We want to make sure that this command succeeds.
+And how we can do that is to check the exit status of the user add command.
+So let's write a brief comment about it and then implement that check.
+We don't want to tell the user that an account was created when it wasn't.
+Okay.
+We'll start off our statement, double brackets.
+We'll make sure to use a space.
+And then we know that the exit status of the most previously executed command is stored in dollar sign
+question mark.
+And so again, as convention holds, if it's an exit status of zero, that means everything went well,
+the command succeeded, and if it's not zero, then something went wrong.
+So if the exit status is not equal to zero, that's what the dash e stands for.
+Then we're going to display an error message.
+And then we're going to exit our script with a zero exit status.
+Now, assuming that we get past the if statement in the script, that means the user ad command succeeded.
+Now what we want to do is set the password for the account.
+We're going to echo the password.
+And then we're going to pipe that output as the input to the password command swg with a dash dash STD
+in option and we're going to supply the username.
+If we want to be really safe, we can also check to see if the password command succeeded and if the
+password was properly set on the account.
+Again, if something goes wrong here, then the account is not fully completed.
+So we'll want to exit with a non zero exit status.
+So again, we'll check for dollar question mark.
+If it doesn't equal zero, then display an error message.
+And then exit with an exit status of one and finish our if statement.
+Finally, what we want to do is force the password change on first login.
+And we can do that with a password command, with a dash e option and give it the username that we're
+operating against.
+So at this point, you could even do another check to make sure that this execution of the password
+command succeeded.
+Well, I'm looking at my script here.
+I notice that I did something that will probably work, but it's not a best practice.
+Back in my previous statement here, I forgot to enclose this variable in quotes, and I want to make
+sure I do that.
+So let me go ahead and add that back in.
+So now we've set our password.
+We've forced the password to be changed on first login.
+And so now what we want to do is display this information to the person running the script so that they
+can then hand it off to the user that will be using the account.
+So we're going to give them the username, the password and the host where the user was created.
+Now I know the password command generates some output and I want to separate this output from that output.
+So I'm going to use the echo statement on its own without any options or without any arguments.
+The echo statement displays what is passed to it and a new line.
+So if you don't pass anything to Echo, it's ultimately going to print a blank line.
+And so that's what we'll use it for here.
+Now let's display the username.
+And we'll display this on the next line.
+Let's add another blank line and we'll tell them the password.
+And finally, we want to tell them the host.
+So at this point, if you don't know how to get the host name, what you can do is look at the Bash
+Man page.
+And let's do that really quickly now.
+See my changes type man bash.
+So let's perform a search and see if we can find anything about a host name and the bash man page.
+And to perform a search, we'll use a forward slash, which is a forward search.
+We'll type hostname and press enter.
+And sure enough, we come to something that is in all uppercase letters and as we know by convention,
+something in all uppercase letters can be a variable name.
+So this variable says that it's automatically set to the name of the current host.
+So if we scroll back up here, we can make sure that this is indeed in the variable section and we'll
+keep going up here.
+And sure enough its in the shell variables so we can hit queue to exit out of here.
+Let's look at the value of it.
+It's set to local users, which is the name of our system that we're currently on.
+You can see our username Vagrant at Local Users, so let's get back into our shell script and add that
+last bit of information.
+So if we get to this point, the script is really complete and it's completed successfully.
+So by convention we need to exit with a zero exit status so we can do that with this.
+Now let's save our script and start testing it.
+The first time we execute this script, we want to make sure that it has executable permissions.
+Okay.
+Let's go ahead and add a user with the script that we created.
+Let's create a username of Einstein.
+The real name will be Albert Einstein.
+Stine and the password will set to something like E equals M.C. squared theory and end it with a dollar
+sign.
+Okay.
+We get some output from the password command and then we get the output that we displayed at the bottom
+here, the username, the password and the host that it was created on.
+So it looks like the script function.
+Normally we can check the exit status with echo dollar question mark.
+Sure enough, we have a zero exit status, so that all looks good.
+Now let's look at the Etsy password file to see if the user was created.
+Can use the cat etsy password command or even the tail etsy password command which will just print the
+bottom of the file so you can see the last line of the file here is the Einstein user and that the comment
+is included in the account line and everything looks good there.
+To really test if the account was created properly.
+Let's go ahead and switch to that user.
+So we'll use SU for switch user space dash to get the user's login environment space Einstein which
+is a username.
+And now it's prompting us for the password, which we can enter now.
+Sure enough, it accepted the password that we supplied when we executed our script.
+And now it looks like it's forcing us to change the password, which is exactly what we wanted to happen.
+So let's go ahead and retype in the current password.
+And let's go ahead and give it a new password, something like, let's say crazy hair.
+And end it with an exclamation point.
+Now that we've proven that the script works for creating accounts, let's see what happens when we execute
+the script without the proper privileges.
+So I'll just type in exit to get back to our vagrant account.
+So let's do this dot forward slash add local user.
+Sure enough, it exits the script, doesn't ask us for the account name or the password or any of that,
+doesn't attempt to create the account, which is exactly what we want to happen.
+It gives us a status message here that teaches the user how to actually use the script, which is really
+good.
+Now we want to check the exit status.
+Let's see it here, Echo.
+Dollar sign, question mark and press enter.
+Sure enough, it's a non zero exit status, so our script fits all of our requirements and it works
+exactly as expected.
+Again, I just want to say that if you didn't come up with the exact script that I did line by line,
+that is okay as long as these tests pass, because that means that your script works and that's all
+that really matters.
+I hope you enjoyed writing this script and now we're going to move on and learn some more about shell
+scripting.

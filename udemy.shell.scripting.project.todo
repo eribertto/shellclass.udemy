@@ -11,10 +11,13 @@ https://www.udemy.com/course/linux-shell-scripting-projects/
 	✔ Section 12 getting started with shell scripting @done(23-01-22 21:35)
 	✔ Section 13 special variables, pseudocode, command substituion, if conditionals @done(23-01-22 21:35)
 	✔ Section 14 exit statuses, return codes, string test conditionals @done(23-01-22 21:35)
-	☐ Section 15 reading standard input, creating accounts, username conventions
-	☐ Section 16 exercise 2 instructions
-	☐ Section 17 exercise 2 walkthrough
---
+	✔ Section 15 reading standard input, creating accounts, username conventions @done(23-01-29 21:37)
+	✔ Section 16 exercise 2 instructions @done(23-01-29 21:37)
+	✔ Section 17 exercise 2 walkthrough @done(23-01-29 21:37)
+			todo:
+				☐ Finish exercise 2 add local users script
+	
+				--
 
 ✔ Section 2: @done(23-01-20 13:59)
 	✔ S3-S10 @done(23-01-20 13:59)

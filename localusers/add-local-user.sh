@@ -12,17 +12,17 @@ then
 fi
 
 # get the username (login)
-read -p 'Enter the username to create: ' USER_NAME
+read -rp 'Enter the username to create: ' USER_NAME
 
 # get the real name (contents for the description field).
-read -p 'Enter the name of the person or application that will use this account: ' COMMENT
+read -rp 'Enter the name of the person or application that will use this account: ' COMMENT
 
 # get the password
-read -p 'Enter the password of the account: ' PASSWORD
+read -rp 'Enter the password of the account: ' PASSWORD
 
 # create the account
 # note the comment variable wrapped by double quotes as protection for spaces in the comment
-useradd -c "${COMMENT}" -m ${USER_NAME}
+useradd -c "${COMMENT}" -m "${USER_NAME}"
 
 # check if the useradd command succeeded or not
 # we dont want to tell the user that an account was created when it hasn't been
@@ -33,7 +33,7 @@ then
 fi
 
 # set the password
-echo ${PASSWORD} | passwd --stdin ${USER_NAME}
+echo "${PASSWORD}" | passwd --stdin "${USER_NAME}"
 if [[ "${?}" -ne 0 ]]
 then
 	echo 'The password could not be set!'
@@ -41,13 +41,13 @@ then
 fi
 
 # force password change on first login
-passwd -e ${USER_NAME}
+passwd -e "${USER_NAME}"
 
 # display the username, password and host where the user was created
 # use echo to add new line separators
 echo
 echo 'username:'
-echo "${USERNAME}"
+echo "${USER_NAME}"
 echo
 echo 'password:'
 echo "${PASSWORD}"

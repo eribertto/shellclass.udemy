@@ -15,7 +15,12 @@ https://www.udemy.com/course/linux-shell-scripting-projects/
 	✔ Section 16 exercise 2 instructions @done(23-01-29 21:37)
 	✔ Section 17 exercise 2 walkthrough @done(23-01-29 21:37)
 			todo:
-				☐ Finish exercise 2 add local users script
+				✔ Finish exercise 2 add local users script @done(23-01-30 22:33)
+				Update:
+					✔ successful creating 2 additional users isaac and tedison. @done(23-01-30 22:34)
+					✔ successful changing the password of einstein on first time login (root-enforced change) @done(23-01-30 22:35)
+					✔ note during the password change prompt NO characters are shown in the screen. @done(23-01-30 22:35)
+
 	
 				--
 

@@ -16,7 +16,7 @@ echo "Another syntax using brace expansion: This is a shell ${WORD}"
 # append text to the variable using brace expansion
 echo "${WORD}ing is fun!"
 # this doesnt work
-echo "$WORDing is fun! ( doesnt work )"
+echo "$\{WORD\}ing is fun! ( doesnt work )"
 # new variable
 ENDING='ed'
 

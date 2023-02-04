@@ -3,9 +3,11 @@ Resume Linux Shell Scripting Udemy course
 Linux Shell Scripting: A Project-Based Approach to Learning
 https://www.udemy.com/course/linux-shell-scripting-projects/
 
-
-
-
+--
+☐ Section 20. The while loop, Infinite Loops, Shifting, Sleeping.
+✔ Section 18. Random Data, Cryptographic Hash Functions, Test and String Manipulation @done(23-02-04 20:31)
+✔ Section 19. Positional parameters, Arguments, for Loops, Special Parameters. @done(23-02-04 21:06)
+--
 ✔ Begin Section 3 User and account creation Shell Scripting Project 1. @done(23-01-20 14:00)
 	✔ Section 11 section introduction @done(23-01-20 15:29)
 	✔ Section 12 getting started with shell scripting @done(23-01-22 21:35)
